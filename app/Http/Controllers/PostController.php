@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -68,13 +69,8 @@ class PostController extends Controller
             'content' => ['required'],
         ]);
 
-        $user_id = auth()->user()->id;
-        if ($user_id == $post->user_id) {
-            $post->update($attrs);
-            return redirect('/posts/' . $post->id);
-        } else {
-            abort(403);
-        }
+        $post->update($attrs);
+        return redirect('/posts/' . $post->id);
     }
 
     /**
